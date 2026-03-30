@@ -1,0 +1,70 @@
+# APL Framework — Default Configuration
+# All hyperparameters referenced in the paper
+
+model:
+  # Vision-Language backbone
+  clip_model: "ViT-B/16"           # CLIP backbone architecture
+  feature_dim: 512                  # d: embedding dimension
+  num_local_features: 196          # N: number of local region features (14x14 patches)
+  num_semantic_classes: 11         # M: number of semantic scene categories
+
+  # Feature Generator (cross-attention SFG)
+  bottleneck_dim: 256               # dmid = d/2
+  num_heads: 8                      # multi-head attention heads
+
+  # Fine-Grained branch
+  num_fine_grained: 4              # Z: number of fine-grained prompt features
+  eta: 0.5                          # multi-scale factor η ∈ (0, 1]
+  temperature: 0.07                 # τ: softmax temperature
+
+  # Prompt tokens
+  num_text_prompt_tokens: 16       # learnable text prompt length
+  num_visual_prompt_tokens: 4      # learnable visual prompt tokens
+
+training:
+  # Loss weights (λ coefficients)
+  lambda_gi: 1.0                   # λ_GI: global-invariant branch weight
+  lambda_id: 1.0                   # λ_ID: instance-dependent branch weight
+  lambda_fg: 1.0                   # λ_FG: fine-grained branch weight
+
+  # GI regularization
+  lambda_text_reg: 0.25            # λ1: text feature regularization
+  lambda_visual_reg: 0.25          # λ2: visual feature regularization
+
+  # Iterative refinement
+  max_iterations: 3                # T_max: maximum refinement iterations
+  convergence_eps: 0.01            # ε: convergence threshold for Δγ
+
+  # Optimization
+  learning_rate: 0.002
+  batch_size: 32
+  num_epochs: 10
+  weight_decay: 5.0e-4
+
+rule_engine:
+  # Decision thresholds (legally-defined confidence bounds)
+  gamma_strict: 0.75               # Γ_strict: violation threshold
+  gamma_loose: 0.40                # Γ_loose: insufficient evidence threshold
+
+  # Soft-logic gate parameters
+  kappa: 10.0                      # κ: sigmoid steepness for Boolean transition
+  # τ_q (predicate-specific thresholds) learned per-predicate
+
+data:
+  # Datasets used in the paper
+  traffic_datasets:
+    - "BDD100K"
+    - "LISA_Traffic_Light"
+    - "Red_Light_Violation"
+  general_datasets:
+    - "COCO"
+    - "ADE20K"
+
+  # Unified label space
+  label_space:
+    - "violation"
+    - "non_violation"
+    - "ambiguous"
+
+  # Few-shot settings evaluated
+  few_shot_shots: [1, 2, 4, 8, 16]
