@@ -1,0 +1,62 @@
+"""Evaluation suite: privacy, task utility, textual quality, ablations."""
+
+from .ablation import VARIANTS, direct_classifier_label, evaluate_variant, run_ablation
+from .privacy import (
+    MIAResult,
+    ReconstructionMetrics,
+    membership_inference_attack,
+    model_confidence_signal,
+    model_loss_signal,
+    mse,
+    privacy_score,
+    psnr,
+    reconstruction_metrics,
+    replay_attack_success_rate,
+    ssim,
+)
+from .text_quality import TextQualityReport, bleu, cider, rouge_l, text_quality
+from .utility import (
+    AblationRow,
+    DownstreamReport,
+    accuracy,
+    downstream_report,
+    format_table,
+    mae,
+    rmse,
+    scenario_prf,
+    semantic_utility,
+    violation_accuracy,
+)
+
+__all__ = [
+    "privacy_score",
+    "ssim",
+    "psnr",
+    "mse",
+    "replay_attack_success_rate",
+    "reconstruction_metrics",
+    "ReconstructionMetrics",
+    "membership_inference_attack",
+    "model_confidence_signal",
+    "model_loss_signal",
+    "MIAResult",
+    "semantic_utility",
+    "violation_accuracy",
+    "scenario_prf",
+    "rmse",
+    "mae",
+    "accuracy",
+    "downstream_report",
+    "DownstreamReport",
+    "AblationRow",
+    "format_table",
+    "bleu",
+    "rouge_l",
+    "cider",
+    "text_quality",
+    "TextQualityReport",
+    "run_ablation",
+    "evaluate_variant",
+    "direct_classifier_label",
+    "VARIANTS",
+]

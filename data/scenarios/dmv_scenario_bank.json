@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "name": "dmv_scenario_bank",
+    "version": "1.0",
+    "num_scenarios": 12,
+    "description": "DMV-aligned violation scenario bank used by the APL rule engine. Each scenario s_j = (nu_j, E_j, r_j) carries a violation type, a set of evidentiary predicates, and a deterministic decision rule. Predicate phrasings are written as privacy-neutral observations: they describe road state, vehicle state and signage, never identity attributes.",
+    "sources": [
+      "State driver handbook (right-of-way, signal, stop-line and speed chapters)",
+      "Federal MUTCD signage and signal definitions",
+      "Uniform Vehicle Code article on traffic-control-device obedience"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "S01",
+      "violation_type": "red_light_running",
+      "legal_reference": "Obedience to steady circular red indication",
+      "predicates": [
+        {"id": "signal_state_red", "text": "the traffic signal facing the vehicle shows a steady red light"},
+        {"id": "vehicle_crosses_stop_line", "text": "a vehicle crosses the painted stop line at the intersection"},
+        {"id": "vehicle_in_motion", "text": "the vehicle is moving forward rather than standing still"}
+      ],
+      "rule": {"type": "all", "required": ["signal_state_red", "vehicle_crosses_stop_line", "vehicle_in_motion"]}
+    },
+    {
+      "id": "S02",
+      "violation_type": "stop_sign_violation",
+      "legal_reference": "Required stop at a regulatory STOP sign",
+      "predicates": [
+        {"id": "stop_sign_present", "text": "a regulatory stop sign is posted at the approach"},
+        {"id": "vehicle_in_motion", "text": "the vehicle is moving forward rather than standing still"},
+        {"id": "vehicle_crosses_stop_line", "text": "a vehicle crosses the painted stop line at the intersection"}
+      ],
+      "rule": {"type": "all", "required": ["stop_sign_present", "vehicle_in_motion", "vehicle_crosses_stop_line"]}
+    },
+    {
+      "id": "S03",
+      "violation_type": "wrong_lane_use",
+      "legal_reference": "Driving on roadways laned for traffic",
+      "predicates": [
+        {"id": "lane_marking_visible", "text": "lane markings separating the travel lanes are visible on the road surface"},
+        {"id": "vehicle_straddles_lane", "text": "a vehicle body overlaps the lane dividing line"},
+        {"id": "no_turn_signal", "text": "no turn indicator lamp is illuminated on the vehicle"}
+      ],
+      "rule": {"type": "all", "required": ["lane_marking_visible", "vehicle_straddles_lane", "no_turn_signal"]}
+    },
+    {
+      "id": "S04",
+      "violation_type": "illegal_turn",
+      "legal_reference": "Turning movements prohibited by posted sign",
+      "predicates": [
+        {"id": "no_turn_sign_present", "text": "a sign prohibiting the turning movement is posted at the intersection"},
+        {"id": "vehicle_turning", "text": "a vehicle is executing a turning movement at the intersection"},
+        {"id": "vehicle_in_intersection", "text": "the vehicle is inside the intersection box"}
+      ],
+      "rule": {"type": "all", "required": ["no_turn_sign_present", "vehicle_turning", "vehicle_in_intersection"]}
+    },
+    {
+      "id": "S05",
+      "violation_type": "crosswalk_obstruction",
+      "legal_reference": "Yielding to pedestrians within a marked crosswalk",
+      "predicates": [
+        {"id": "crosswalk_marked", "text": "a marked crosswalk is painted across the roadway"},
+        {"id": "pedestrian_in_crosswalk", "text": "a pedestrian is inside the marked crosswalk"},
+        {"id": "vehicle_overlaps_crosswalk", "text": "a vehicle occupies part of the marked crosswalk"},
+        {"id": "vehicle_in_motion", "text": "the vehicle is moving forward rather than standing still"}
+      ],
+      "rule": {"type": "all", "required": ["crosswalk_marked", "pedestrian_in_crosswalk", "vehicle_overlaps_crosswalk", "vehicle_in_motion"]}
+    },
+    {
+      "id": "S06",
+      "violation_type": "speed_zone_violation",
+      "legal_reference": "Compliance with posted maximum speed limit",
+      "predicates": [
+        {"id": "speed_limit_sign_present", "text": "a posted speed limit sign is visible along the roadway"},
+        {"id": "vehicle_motion_blur_high", "text": "the vehicle appears with strong motion blur relative to the static background"},
+        {"id": "road_class_urban", "text": "the road is an urban street rather than a highway segment"}
+      ],
+      "rule": {"type": "all", "required": ["speed_limit_sign_present", "vehicle_motion_blur_high", "road_class_urban"]}
+    },
+    {
+      "id": "S07",
+      "violation_type": "bus_lane_intrusion",
+      "legal_reference": "Restricted-use lane occupancy",
+      "predicates": [
+        {"id": "bus_lane_marking", "text": "a lane is marked as reserved for buses"},
+        {"id": "non_transit_vehicle_present", "text": "a passenger car or truck rather than a transit bus occupies the reserved lane"},
+        {"id": "lane_restriction_in_force", "text": "the sign indicating the restricted hours is in force"}
+      ],
+      "rule": {"type": "all", "required": ["bus_lane_marking", "non_transit_vehicle_present", "lane_restriction_in_force"]}
+    },
+    {
+      "id": "S08",
+      "violation_type": "railroad_crossing_violation",
+      "legal_reference": "Obedience to railroad grade-crossing signals",
+      "predicates": [
+        {"id": "railroad_crossing_present", "text": "a railroad grade crossing is present on the roadway"},
+        {"id": "crossing_gate_down", "text": "the crossing gate arm is lowered across the road"},
+        {"id": "vehicle_on_tracks", "text": "a vehicle is positioned on or beyond the crossing tracks"}
+      ],
+      "rule": {"type": "all", "required": ["railroad_crossing_present", "crossing_gate_down", "vehicle_on_tracks"]}
+    },
+    {
+      "id": "S09",
+      "violation_type": "emergency_vehicle_failure_to_yield",
+      "legal_reference": "Operation on approach of an authorized emergency vehicle",
+      "predicates": [
+        {"id": "emergency_vehicle_present", "text": "an emergency vehicle with activated warning lights is present in the scene"},
+        {"id": "vehicle_in_motion", "text": "the vehicle is moving forward rather than standing still"},
+        {"id": "no_shoulder_clearance", "text": "the surrounding vehicles have not moved toward the shoulder"}
+      ],
+      "rule": {"type": "all", "required": ["emergency_vehicle_present", "vehicle_in_motion", "no_shoulder_clearance"]}
+    },
+    {
+      "id": "S10",
+      "violation_type": "parking_in_prohibited_zone",
+      "legal_reference": "Stopping, standing and parking prohibitions",
+      "predicates": [
+        {"id": "no_parking_sign_present", "text": "a no parking or no standing sign is posted at the curb"},
+        {"id": "vehicle_stationary_at_curb", "text": "a vehicle is stationary along the curb"},
+        {"id": "curb_marking_restrictive", "text": "the curb is painted in a color that marks a restricted zone"}
+      ],
+      "rule": {"type": "all", "required": ["no_parking_sign_present", "vehicle_stationary_at_curb", "curb_marking_restrictive"]}
+    },
+    {
+      "id": "S11",
+      "violation_type": "unsafe_following_distance",
+      "legal_reference": "Following another vehicle more closely than is reasonable",
+      "predicates": [
+        {"id": "lead_vehicle_present", "text": "a lead vehicle occupies the same travel lane ahead"},
+        {"id": "gap_below_two_seconds", "text": "the visible gap between the two vehicles spans less than two vehicle lengths"},
+        {"id": "both_vehicles_in_motion", "text": "both vehicles are moving along the roadway"}
+      ],
+      "rule": {"type": "all", "required": ["lead_vehicle_present", "gap_below_two_seconds", "both_vehicles_in_motion"]}
+    },
+    {
+      "id": "S12",
+      "violation_type": "work_zone_violation",
+      "legal_reference": "Obedience to temporary traffic-control devices in a work zone",
+      "predicates": [
+        {"id": "work_zone_devices_present", "text": "cones barrels or temporary barriers delimit an active work zone"},
+        {"id": "lane_closed_ahead", "text": "a travel lane is closed by the temporary traffic control devices"},
+        {"id": "vehicle_in_closed_lane", "text": "a vehicle travels inside the closed lane"}
+      ],
+      "rule": {"type": "all", "required": ["work_zone_devices_present", "lane_closed_ahead", "vehicle_in_closed_lane"]}
+    }
+  ]
+}

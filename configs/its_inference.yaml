@@ -1,0 +1,20 @@
+# Traffic-scene inference configuration (Sec. V-E .. V-G, Table I).
+logic:
+  scenario_bank: data/scenarios/dmv_scenario_bank.json
+  tau_init: 0.25
+  kappa: 10.0
+  gamma_loose: 0.40
+  gamma_strict: 0.80
+  gap_threshold: 0.50
+  learnable_tau: true
+  fg_local_evidence: true
+refinement:
+  t_max: 5
+  epsilon: 0.001
+  max_gap_prompts: 8
+  gap_token_length: 8
+  enabled: true
+data:
+  dataset: traffic
+  root: data/traffic
+output_dir: runs/its

@@ -1,0 +1,89 @@
+# APL - default configuration (Table I of the paper)
+#
+# Frozen CLIP ViT-B/16 backbone; only the prompt tokens, the feature
+# generator, the conditioning banks and the predicate thresholds are learned.
+# Override any field from the command line, e.g.
+#   python scripts/train_fewshot.py --config configs/apl_base.yaml --set optim.epochs=10
+encoder:
+  backbone: ViT-B/16
+  provider: auto
+  pretrained: openai
+  embed_dim: 512
+  vision_width: 768
+  vision_layers: 12
+  vision_heads: 12
+  patch_size: 16
+  image_resolution: 224
+  text_width: 512
+  text_layers: 12
+  text_heads: 8
+  vocab_size: 49408
+  context_length: 77
+  num_local_features: 196
+  freeze: true
+  device: cpu
+  checkpoint: null
+prompt:
+  base_prompt: Describe the traffic scene including vehicles, signals, road markings
+  class_template: '{base}: {category}'
+  n_text_tokens: 4
+  n_visual_tokens: 4
+  init_std: 0.02
+  insertion: input
+feature_generator:
+  dim: 512
+  key_dim: 512
+  mid_dim: 256
+  num_heads: 1
+  dropout: 0.0
+  residual: true
+branches:
+  use_global_invariant: true
+  use_instance_dependent: true
+  use_fine_grained: true
+  num_fg_tokens: 4
+  eta: 1.0
+  fg_topk_mode: proportion
+  fg_init_std: 0.02
+loss:
+  lambda_gi: 1.0
+  lambda_id: 1.0
+  lambda_fg: 1.0
+  lambda1: 0.1
+  lambda2: 0.1
+  temperature: 0.07
+optim:
+  optimizer: sgd
+  lr: 0.002
+  momentum: 0.9
+  weight_decay: 0.0001
+  batch_size: 32
+  epochs: 50
+  warmup_epochs: 5
+  warmup_lr: 1.0e-05
+  min_lr: 1.0e-06
+  grad_clip: 0.0
+  seed: 1
+logic:
+  scenario_bank: data/scenarios/dmv_scenario_bank.json
+  tau_init: 0.25
+  kappa: 10.0
+  gamma_loose: 0.4
+  gamma_strict: 0.8
+  gap_threshold: 0.5
+  learnable_tau: true
+  fg_local_evidence: true
+refinement:
+  t_max: 5
+  epsilon: 0.001
+  max_gap_prompts: 8
+  gap_token_length: 8
+  enabled: true
+data:
+  root: data
+  dataset: synthetic
+  num_shots: 16
+  subsample: all
+  image_size: 224
+  num_workers: 0
+output_dir: runs/apl

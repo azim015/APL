@@ -1,0 +1,27 @@
+# Tiny CPU configuration used by the tests and by scripts/demo.py.
+# The backbone keeps CLIP's structure but is shrunk so a full run takes seconds.
+encoder:
+  provider: fallback
+  vision_layers: 2
+  vision_width: 192
+  vision_heads: 4
+  text_layers: 2
+  text_width: 128
+  text_heads: 4
+  image_resolution: 64
+  patch_size: 16
+  num_local_features: 16
+  embed_dim: 128
+feature_generator:
+  dim: 128
+  key_dim: 128
+  mid_dim: 64
+optim:
+  epochs: 40
+  lr: 0.02
+  batch_size: 8
+  warmup_epochs: 2
+data:
+  dataset: synthetic
+  image_size: 64
+output_dir: runs/smoke

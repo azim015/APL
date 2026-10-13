@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apl-privacy"
+version = "1.0.0"
+description = "Adaptive Prompt Learning for Privacy-Preserving via Vision-Language Models"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+  { name = "Abdolazim Rezaei" },
+  { name = "Mahboobeh Haghparast" },
+  { name = "Ahmad Patooghy" },
+  { name = "Mehdi Sookhak" },
+]
+keywords = ["prompt-learning", "vision-language", "privacy", "CLIP", "ITS"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["torch>=2.0", "numpy>=1.22", "pyyaml>=6.0", "pillow>=9.0"]
+
+[project.optional-dependencies]
+clip = ["open_clip_torch>=2.20"]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Repository = "https://github.com/azim015/APL"
+
+[tool.setuptools.packages.find]
+include = ["apl*"]
+
+[tool.setuptools.package-data]
+apl = ["../data/scenarios/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

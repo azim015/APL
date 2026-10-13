@@ -1,0 +1,13 @@
+# 16-shot prompt-learning benchmark configuration (Tables II / III).
+# Inherits the Table I defaults; only the data section differs.
+data:
+  dataset: imagefolder
+  root: data/benchmarks/imagenet
+  num_shots: 16
+  subsample: all
+  image_size: 224
+optim:
+  epochs: 50
+  batch_size: 32
+  seed: 1
+output_dir: runs/fewshot
