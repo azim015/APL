@@ -268,12 +268,7 @@ violation was recovered.
 ## Citation
 
 ```bibtex
-@article{rezaei2026apl,
-  title   = {Adaptive Prompt Learning for Privacy-Preserving via Vision-Language Models},
-  author  = {Rezaei, Abdolazim and Haghparast, Mahboobeh and Patooghy, Ahmad and Sookhak, Mehdi},
-  journal = {IEEE Transactions on Big Data},
-  year    = {2026}
-}
+// copy citation here any time published
 ```
 
 This work was supported in part by the National Science Foundation under
